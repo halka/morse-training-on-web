@@ -7,8 +7,8 @@ import { ThemeProvider } from "@/lib/theme-provider"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "モールス符号学習アプリ",
-  description: "モールス符号を効率的に学ぶためのインタラクティブなアプリケーション",
+  title: "アマチュア無線のなんらか",
+  description: "モールス符号とかをカジュアルに学ぶぞ！",
     generator: 'v0.dev'
 }
 
