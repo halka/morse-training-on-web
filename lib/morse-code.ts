@@ -187,3 +187,313 @@ export const qCodesData: Record<string, { meaning: string; description: string }
   },
 }
 
+// アマチュア無線特有の略語や符号のデータ
+export const hamRadioData: Record<
+  string,
+  {
+    morse: string
+    meaning: string
+    description: string
+    category: string
+  }
+> = {
+  // 運用符号
+  AR: {
+    morse: ".-.-.",
+    meaning: "送信終了",
+    description: "メッセージの終わりを示す符号です。「+」と同じ符号で、一連の送信の終了を示します。",
+    category: "運用符号",
+  },
+  AS: {
+    morse: ".-...",
+    meaning: "待機",
+    description: "相手に少し待ってもらうことを伝える符号です。",
+    category: "運用符号",
+  },
+  BK: {
+    morse: "-...-.-",
+    meaning: "ブレイク",
+    description: "送信の途中で割り込む際に使用する符号です。",
+    category: "運用符号",
+  },
+  BT: {
+    morse: "-...-",
+    meaning: "区切り",
+    description: "文章や段落の区切りを示す符号です。「=」と同じ符号です。",
+    category: "運用符号",
+  },
+  CL: {
+    morse: "-.-..-..",
+    meaning: "閉局",
+    description: "交信を終了し、無線局を閉じることを示す符号です。",
+    category: "運用符号",
+  },
+  CT: {
+    morse: "-.-.-",
+    meaning: "送信開始",
+    description: "送信を開始することを示す符号です。",
+    category: "運用符号",
+  },
+  KN: {
+    morse: "-.-.",
+    meaning: "指定呼出",
+    description: "特定の局のみに応答を求める符号です。",
+    category: "運用符号",
+  },
+  SK: {
+    morse: "...-.-",
+    meaning: "交信終了",
+    description: "交信の終了を示す符号です。",
+    category: "運用符号",
+  },
+  VA: {
+    morse: "...-.-",
+    meaning: "交信終了",
+    description: "SKと同じ意味で、交信の終了を示す符号です。",
+    category: "運用符号",
+  },
+
+  // 一般的な略語
+  CQ: {
+    morse: "-.-. --.-",
+    meaning: "一般呼出",
+    description: "「どなたか応答してください」という意味で使用される一般呼出符号です。",
+    category: "一般的な略語",
+  },
+  DE: {
+    morse: "-.. .",
+    meaning: "〜から",
+    description: "「〜から」を意味し、自局の識別に使用されます。例：「CQ CQ DE JA1ZRL」",
+    category: "一般的な略語",
+  },
+  DX: {
+    morse: "-.. -..-",
+    meaning: "遠距離通信",
+    description: "遠距離の局との通信を意味します。",
+    category: "一般的な略語",
+  },
+  ES: {
+    morse: ". ...",
+    meaning: "と",
+    description: "「and」（と）を意味する略語です。",
+    category: "一般的な略語",
+  },
+  HI: {
+    morse: ".... ..",
+    meaning: "笑い",
+    description: "モールス通信での笑いを表現する略語です。",
+    category: "一般的な略語",
+  },
+  HPE: {
+    morse: ".... .--. .",
+    meaning: "希望する",
+    description: "「hope」（希望する）を意味する略語です。",
+    category: "一般的な略語",
+  },
+  HR: {
+    morse: ".... .-.",
+    meaning: "ここ",
+    description: "「here」（ここ）を意味する略語です。",
+    category: "一般的な略語",
+  },
+  NR: {
+    morse: "-. .-.",
+    meaning: "番号",
+    description: "「number」（番号）を意味する略語です。",
+    category: "一般的な略語",
+  },
+  OM: {
+    morse: "--- --",
+    meaning: "男性オペレーター",
+    description: "「Old Man」の略で、男性オペレーターを指す略語です。",
+    category: "一般的な略語",
+  },
+  PSE: {
+    morse: ".--. ... .",
+    meaning: "お願いします",
+    description: "「please」（お願いします）を意味する略語です。",
+    category: "一般的な略語",
+  },
+  RST: {
+    morse: ".-. ... -",
+    meaning: "信号レポート",
+    description:
+      "Readability（可読性）、Strength（信号強度）、Tone（音調）の略で、信号の品質を報告するために使用されます。",
+    category: "一般的な略語",
+  },
+  RX: {
+    morse: ".-. -..-",
+    meaning: "受信機",
+    description: "「receiver」（受信機）を意味する略語です。",
+    category: "一般的な略語",
+  },
+  TX: {
+    morse: "- -..-",
+    meaning: "送信機",
+    description: "「transmitter」（送信機）を意味する略語です。",
+    category: "一般的な略語",
+  },
+  TKS: {
+    morse: "- -.- ...",
+    meaning: "ありがとう",
+    description: "「thanks」（ありがとう）を意味する略語です。",
+    category: "一般的な略語",
+  },
+  TNX: {
+    morse: "- -. -..-",
+    meaning: "ありがとう",
+    description: "「thanks」（ありがとう）を意味する略語です。TKSと同じ意味です。",
+    category: "一般的な略語",
+  },
+  UR: {
+    morse: "..- .-.",
+    meaning: "あなたの",
+    description: "「your」（あなたの）を意味する略語です。",
+    category: "一般的な略語",
+  },
+  VY: {
+    morse: "...- -.--",
+    meaning: "とても",
+    description: "「very」（とても）を意味する略語です。",
+    category: "一般的な略語",
+  },
+  WX: {
+    morse: ".-- -..-",
+    meaning: "天気",
+    description: "「weather」（天気）を意味する略語です。",
+    category: "一般的な略語",
+  },
+  XYL: {
+    morse: "-..- -.-- .-..",
+    meaning: "妻",
+    description: "「ex-Young Lady」の略で、オペレーターの妻を指す略語です。",
+    category: "一般的な略語",
+  },
+  YL: {
+    morse: "-.-- .-..",
+    meaning: "女性オペレーター",
+    description: "「Young Lady」の略で、女性オペレーターを指す略語です。",
+    category: "一般的な略語",
+  },
+
+  // 数字コード
+  "73": {
+    morse: "--... ...--",
+    meaning: "よろしく",
+    description: "「Best regards」（よろしく）を意味する数字コードです。交信の終わりに使用されることが多いです。",
+    category: "数字コード",
+  },
+  "88": {
+    morse: "--... --...",
+    meaning: "愛と口づけを",
+    description: "「Love and kisses」（愛と口づけを）を意味する数字コードです。親しい間柄で使用されます。",
+    category: "数字コード",
+  },
+  "99": {
+    morse: "--... ---..",
+    meaning: "退去せよ",
+    description: "「Go away」（退去せよ）を意味する数字コードです。",
+    category: "数字コード",
+  },
+  "44": {
+    morse: "....- ....-",
+    meaning: "どこにも行かない",
+    description: "「I am not going anywhere」（どこにも行かない）を意味する数字コードです。",
+    category: "数字コード",
+  },
+  "55": {
+    morse: "..... .....",
+    meaning: "成功を祈る",
+    description: "「Good luck」（成功を祈る）を意味する数字コードです。",
+    category: "数字コード",
+  },
+
+  // 緊急通信
+  SOS: {
+    morse: "... --- ...",
+    meaning: "遭難信号",
+    description: "国際的な遭難信号です。緊急時に救助を求める際に使用されます。",
+    category: "緊急通信",
+  },
+  MAYDAY: {
+    morse: "-- .- -.-- -.. .- -.--",
+    meaning: "遭難信号（音声）",
+    description: "音声通信での国際的な遭難信号です。",
+    category: "緊急通信",
+  },
+  PAN: {
+    morse: ".--. .- -.",
+    meaning: "緊急信号",
+    description: "緊急ではあるが、即時の救助は必要ない状況で使用される信号です。",
+    category: "緊急通信",
+  },
+  SECURITE: {
+    morse: "... . -.-. ..- .-. .. - .",
+    meaning: "安全信号",
+    description: "航行上の安全に関する重要な情報を伝える際に使用される信号です。",
+    category: "緊急通信",
+  },
+
+  // 特殊な符号
+  CHIYODA: {
+    morse: "-.-. .... .. -.-- --- -.. .-",
+    meaning: "千代田区",
+    description: "東京都千代田区を表す符号です。アマチュア無線の試験会場がある地域として知られています。",
+    category: "特殊な符号",
+  },
+  DENPA3: {
+    morse: "-.. . -. .--. .- ...--",
+    meaning: "第3級デジタル無線通信士",
+    description: "日本の無線従事者資格の一つである第3級デジタル無線通信士を表します。",
+    category: "特殊な符号",
+  },
+  MUSEN5: {
+    morse: "-- ..- ... . -. .....",
+    meaning: "第5級アマチュア無線技士",
+    description: "日本のアマチュア無線技士資格の一つである第5級アマチュア無線技士を表します。",
+    category: "特殊な符号",
+  },
+}
+
+// アマチュア無線略語のカテゴリーを取得する関数
+export function getHamRadioCategories(): string[] {
+  const categories = new Set<string>()
+
+  Object.values(hamRadioData).forEach((data) => {
+    categories.add(data.category)
+  })
+
+  return Array.from(categories)
+}
+
+// カテゴリー別にアマチュア無線略語を取得する関数
+export function getHamRadioByCategory(category?: string): Record<
+  string,
+  {
+    morse: string
+    meaning: string
+    description: string
+    category: string
+  }
+> {
+  if (!category) return hamRadioData
+
+  return Object.entries(hamRadioData).reduce(
+    (acc, [code, data]) => {
+      if (data.category === category) {
+        acc[code] = data
+      }
+      return acc
+    },
+    {} as Record<
+      string,
+      {
+        morse: string
+        meaning: string
+        description: string
+        category: string
+      }
+    >,
+  )
+}
+
