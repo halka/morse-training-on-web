@@ -290,8 +290,8 @@ export default function KeyInput() {
             </Button>
           </div>
           <div className="items-center">
-            <Volume2 className="h-4 w-4 text-muted-foreground" />
-            <div className="w-32 h-2 bg-muted rounded-full overflow-hidden">
+            <Volume2 className="text-muted-foreground" />
+            <div className="bg-muted rounded-full overflow-hidden">
               <div
                 className="h-full bg-primary transition-all"
                 style={{ width: `${Math.min(volume * 100 * 3, 100)}%` }}
