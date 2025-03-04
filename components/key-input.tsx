@@ -288,29 +288,27 @@ export default function KeyInput() {
                 </>
               )}
             </Button>
-            </div>
           </div>
+          <div className="items-center">
+            <Volume2 className="h-4 w-4 text-muted-foreground" />
+            <div className="w-32 h-2 bg-muted rounded-full overflow-hidden">
+              <div
+                className="h-full bg-primary transition-all"
+                style={{ width: `${Math.min(volume * 100 * 3, 100)}%` }}
+              />
+            </div>
             <div className="items-center">
-              <Volume2 className="h-4 w-4 text-muted-foreground" />
-              <div className="w-32 h-2 bg-muted rounded-full overflow-hidden">
-                <div
-                  className="h-full bg-primary transition-all"
-                  style={{ width: `${Math.min(volume * 100 * 3, 100)}%` }}
-                />
-              </div>
+              <Label htmlFor="show-visualizer">波形表示</Label>
+              <Switch id="show-visualizer" checked={showVisualizer} onCheckedChange={setShowVisualizer} />
             </div>
           </div>
-    <div className="items-center">
-      <Label htmlFor="show-visualizer">波形表示</Label>
-      <Switch id="show-visualizer" checked={showVisualizer} onCheckedChange={setShowVisualizer} />
-    </div>
-  {
-    showVisualizer && (
-      <div className="border rounded-md p-1 bg-black dark:bg-black">
-        <canvas ref={canvasRef} width={600} height={100} className="w-full h-24" />
-      </div>
-    )
-  }
+          {
+            showVisualizer && (
+              <div className="border rounded-md p-1 bg-black dark:bg-black">
+                <canvas ref={canvasRef} width={600} height={100} className="w-full h-24" />
+              </div>
+            )
+          }
 
           <div className="space-y-2">
             <div className="font-medium">検出されたモールス符号:</div>
@@ -335,73 +333,73 @@ export default function KeyInput() {
             </Button>
           </div>
         </CardContent >
-    <CardFooter>
-      <Accordion type="single" collapsible className="w-full">
-        <AccordionItem value="settings">
-          <AccordionTrigger>
-            <div className="flex items-center">
-              <Settings2 className="h-4 w-4 mr-2" />
-              詳細設定
-            </div>
-          </AccordionTrigger>
-          <AccordionContent>
-            <div className="space-y-4 pt-2">
-              <div className="flex items-center space-x-2">
-                <Label htmlFor="auto-decode">自動デコード</Label>
-                <Switch id="auto-decode" checked={autoDecodeEnabled} onCheckedChange={setAutoDecodeEnabled} />
-              </div>
+        <CardFooter>
+          <Accordion type="single" collapsible className="w-full">
+            <AccordionItem value="settings">
+              <AccordionTrigger>
+                <div className="flex items-center">
+                  <Settings2 className="h-4 w-4 mr-2" />
+                  詳細設定
+                </div>
+              </AccordionTrigger>
+              <AccordionContent>
+                <div className="space-y-4 pt-2">
+                  <div className="flex items-center space-x-2">
+                    <Label htmlFor="auto-decode">自動デコード</Label>
+                    <Switch id="auto-decode" checked={autoDecodeEnabled} onCheckedChange={setAutoDecodeEnabled} />
+                  </div>
 
-              <div className="space-y-2">
-                <Label>検出感度: {threshold.toFixed(2)}</Label>
-                <Slider
-                  value={[threshold]}
-                  min={0.01}
-                  max={0.5}
-                  step={0.01}
-                  onValueChange={(value) => setThreshold(value[0])}
-                />
-              </div>
+                  <div className="space-y-2">
+                    <Label>検出感度: {threshold.toFixed(2)}</Label>
+                    <Slider
+                      value={[threshold]}
+                      min={0.01}
+                      max={0.5}
+                      step={0.01}
+                      onValueChange={(value) => setThreshold(value[0])}
+                    />
+                  </div>
 
-              <div className="space-y-2">
-                <Label>短点の長さ: {dotDuration}ms</Label>
-                <Slider
-                  value={[dotDuration]}
-                  min={50}
-                  max={300}
-                  step={10}
-                  onValueChange={(value) => {
-                    setDotDuration(value[0])
-                    setDashDuration(value[0] * 3)
-                  }}
-                />
-              </div>
+                  <div className="space-y-2">
+                    <Label>短点の長さ: {dotDuration}ms</Label>
+                    <Slider
+                      value={[dotDuration]}
+                      min={50}
+                      max={300}
+                      step={10}
+                      onValueChange={(value) => {
+                        setDotDuration(value[0])
+                        setDashDuration(value[0] * 3)
+                      }}
+                    />
+                  </div>
 
-              <div className="space-y-2">
-                <Label>文字間の間隔: {letterGap}ms</Label>
-                <Slider
-                  value={[letterGap]}
-                  min={300}
-                  max={1000}
-                  step={50}
-                  onValueChange={(value) => setLetterGap(value[0])}
-                />
-              </div>
+                  <div className="space-y-2">
+                    <Label>文字間の間隔: {letterGap}ms</Label>
+                    <Slider
+                      value={[letterGap]}
+                      min={300}
+                      max={1000}
+                      step={50}
+                      onValueChange={(value) => setLetterGap(value[0])}
+                    />
+                  </div>
 
-              <div className="space-y-2">
-                <Label>単語間の間隔: {wordGap}ms</Label>
-                <Slider
-                  value={[wordGap]}
-                  min={700}
-                  max={2000}
-                  step={100}
-                  onValueChange={(value) => setWordGap(value[0])}
-                />
-              </div>
-            </div>
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
-    </CardFooter>
+                  <div className="space-y-2">
+                    <Label>単語間の間隔: {wordGap}ms</Label>
+                    <Slider
+                      value={[wordGap]}
+                      min={700}
+                      max={2000}
+                      step={100}
+                      onValueChange={(value) => setWordGap(value[0])}
+                    />
+                  </div>
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        </CardFooter>
       </Card >
     </div >
   )
