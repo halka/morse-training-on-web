@@ -298,12 +298,13 @@ export default function KeyInput() {
                 />
               </div>
             </div>
-            <div className="flex items-center">
+          </div>
+          <div className="flex items-center">
+            <div className="flex items-center space-x-2">
               <Label htmlFor="show-visualizer">波形表示</Label>
               <Switch id="show-visualizer" checked={showVisualizer} onCheckedChange={setShowVisualizer} />
             </div>
           </div>
-
           {showVisualizer && (
             <div className="border rounded-md p-1 bg-black dark:bg-black">
               <canvas ref={canvasRef} width={600} height={100} className="w-full h-24" />
