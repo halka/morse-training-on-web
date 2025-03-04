@@ -275,7 +275,7 @@ export default function KeyInput() {
             マイクに電鍵の音が入力されるように設定してください。
           </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent>
           <div className="items-center">
             <Button onClick={isListening ? stopAudio : initAudio} variant={isListening ? "destructive" : "default"}>
               {isListening ? (
