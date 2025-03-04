@@ -288,9 +288,6 @@ export default function KeyInput() {
                 </>
               )}
             </Button>
-            <div className="flex items-center">
-              <Label htmlFor="show-visualizer">波形表示</Label>
-              <Switch id="show-visualizer" checked={showVisualizer} onCheckedChange={setShowVisualizer} />
             </div>
             <div className="flex items-center">
               <Volume2 className="h-4 w-4 text-muted-foreground" />
@@ -300,6 +297,10 @@ export default function KeyInput() {
                   style={{ width: `${Math.min(volume * 100 * 3, 100)}%` }}
                 />
               </div>
+            </div>
+            <div className="flex items-center">
+              <Label htmlFor="show-visualizer">波形表示</Label>
+              <Switch id="show-visualizer" checked={showVisualizer} onCheckedChange={setShowVisualizer} />
             </div>
           </div>
 
