@@ -17,7 +17,7 @@ export default function MorseCodeTrainer() {
   return (
     <div className="bg-card rounded-lg shadow-lg p-6">
       <Tabs defaultValue="chart" onValueChange={setActiveTab}>
-        <TabsList className="grid w-full grid-cols-2">
+        <TabsList className="grid w-full grid-cols-2grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8">
           <TabsTrigger value="chart">モールス符号表</TabsTrigger>
           <TabsTrigger value="practice">練習モード</TabsTrigger>
           <TabsTrigger value="audio">音声学習</TabsTrigger>
