@@ -299,7 +299,7 @@ export default function KeyInput() {
               </div>
             </div>
 
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center gap-2">
               <Label htmlFor="show-visualizer">波形表示</Label>
               <Switch id="show-visualizer" checked={showVisualizer} onCheckedChange={setShowVisualizer} />
             </div>
