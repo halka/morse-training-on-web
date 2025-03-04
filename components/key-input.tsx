@@ -288,7 +288,8 @@ export default function KeyInput() {
                 </>
               )}
             </Button>
-
+            </div>
+            <div>
             <div className="flex items-center gap-2">
               <Volume2 className="h-4 w-4 text-muted-foreground" />
               <div className="w-32 h-2 bg-muted rounded-full overflow-hidden">
