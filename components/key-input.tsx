@@ -288,8 +288,6 @@ export default function KeyInput() {
                 </>
               )}
             </Button>
-          </div>
-          <div className="items-center">
             <Volume2 className="text-muted-foreground" />
             <div className="bg-muted rounded-full overflow-hidden">
               <div
