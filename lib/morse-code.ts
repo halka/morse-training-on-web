@@ -437,21 +437,21 @@ export const hamRadioData: Record<
   // 特殊な符号
   CHIYODA: {
     morse: "-.-. .... .. -.-- --- -.. .-",
-    meaning: "千代田区",
-    description: "東京都千代田区を表す符号です。アマチュア無線の試験会場がある地域として知られています。",
-    category: "特殊な符号",
+    meaning: "ちよだ",
+    description: "おなじみのちよだ。",
+    category: "謎",
   },
   DENPA3: {
     morse: "-.. . -. .--. .- ...--",
-    meaning: "第3級デジタル無線通信士",
-    description: "日本の無線従事者資格の一つである第3級デジタル無線通信士を表します。",
-    category: "特殊な符号",
+    meaning: "でんぱ3",
+    description: "どの問題集にも出てくるやつ。",
+    category: "謎",
   },
   MUSEN5: {
     morse: "-- ..- ... . -. .....",
-    meaning: "第5級アマチュア無線技士",
-    description: "日本のアマチュア無線技士資格の一つである第5級アマチュア無線技士を表します。",
-    category: "特殊な符号",
+    meaning: "むせん5",
+    description: "どの問題集にも出てくるやつ。",
+    category: "謎",
   },
 }
 
