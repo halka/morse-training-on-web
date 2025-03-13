@@ -74,5 +74,9 @@ module.exports = {
     },
   },
   plugins: [require("tailwindcss-animate")],
+  future: {
+    // Node.js v22.14.0対応のために将来的な機能を有効化
+    hoverOnlyWhenSupported: true,
+  },
 }
 

@@ -31,9 +31,13 @@ export default function HamRadioCodes() {
       data.description.toLowerCase().includes(searchTerm.toLowerCase()),
   )
 
-  // モールス符号を音声で再生する関数
+  // モールス符号を音声で再生する関数を修正
   const playMorseAudio = (morse: string) => {
-    const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)()
+    // Node.js v22.14.0対応のためにオプションを追加
+    const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)({
+      latencyHint: "interactive",
+      sampleRate: 44100,
+    })
     const gainNode = audioContext.createGain()
     gainNode.connect(audioContext.destination)
 

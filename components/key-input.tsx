@@ -43,7 +43,11 @@ export default function KeyInput() {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
 
-      audioContext.current = new (window.AudioContext || (window as any).webkitAudioContext)()
+      // Node.js v22.14.0対応のためにオプションを追加
+      audioContext.current = new (window.AudioContext || (window as any).webkitAudioContext)({
+        latencyHint: "interactive",
+        sampleRate: 44100,
+      })
       analyser.current = audioContext.current.createAnalyser()
       const source = audioContext.current.createMediaStreamSource(stream)
 

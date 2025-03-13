@@ -137,7 +137,11 @@ export default function HamRadioPractice() {
 
   // モールス符号を再生する関数
   const playMorseAudio = (morse: string) => {
-    const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)()
+    // Node.js v22.14.0対応のためにオプションを追加
+    const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)({
+      latencyHint: "interactive",
+      sampleRate: 44100,
+    })
     const gainNode = audioContext.createGain()
     gainNode.connect(audioContext.destination)
 

@@ -9,10 +9,20 @@ import { Progress } from "@/components/ui/progress"
 import { Switch } from "@/components/ui/switch"
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { Volume2, Send, RefreshCw, Play, Pause } from "lucide-react"
+import { Volume2, Send, RefreshCw, Play, Pause, HelpCircle } from "lucide-react"
 import { textToMorse } from "@/lib/morse-code"
 import { useLanguage } from "@/lib/i18n"
 import { generateRandomStationInfo, isValidCallsign } from "@/lib/callsign-data"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogFooter,
+  DialogClose,
+} from "@/components/ui/dialog"
 
 // QSOのステージ
 enum QSOStage {
@@ -33,7 +43,14 @@ export default function MorseQSOSimulator() {
   const [qsoStarted, setQsoStarted] = useState(false)
   const [qsoStage, setQsoStage] = useState<QSOStage>(QSOStage.START)
   const [stationInfo, setStationInfo] = useState<any>(null)
-  const [qsoLog, setQsoLog] = useState<Array<{ text: string; morse: string; sender: "me" | "station" }>>([])
+  const [qsoLog, setQsoLog] = useState<
+    Array<{
+      text: string
+      morse: string
+      sender: "me" | "station"
+      callsign?: string // コールサインを追加
+    }>
+  >([])
   const [currentMessage, setCurrentMessage] = useState("")
   const [isPlaying, setIsPlaying] = useState(false)
   const [playbackSpeed, setPlaybackSpeed] = useState<"slow" | "medium" | "fast">("medium")
@@ -54,15 +71,17 @@ export default function MorseQSOSimulator() {
     fast: { dotDuration: 60, dashDuration: 180, symbolGap: 60, letterGap: 180, wordGap: 420 },
   }
 
-  // QSOを開始する
+  // QSOを開始する関数を修正
   const startQSO = () => {
     if (!myCallsign.trim() || !isValidCallsign(myCallsign.trim().toUpperCase())) {
       setCallsignError(true)
       return
     }
 
+    // コールサインを大文字に変換して設定
+    const formattedCallsign = myCallsign.trim().toUpperCase()
     setCallsignError(false)
-    setMyCallsign(myCallsign.trim().toUpperCase())
+    setMyCallsign(formattedCallsign)
 
     // ランダムな局情報を生成
     const newStationInfo = generateRandomStationInfo()
@@ -75,14 +94,14 @@ export default function MorseQSOSimulator() {
     setQsoStarted(true)
     setQsoStage(QSOStage.CQ_CALL)
 
-    // CQ呼び出しを追加
-    const cqText = t("cqCalling").replace("{callsign}", newStationInfo.callsign)
+    // CQ呼び出しを追加 - プレースホルダーを置換
+    const cqText = t("cqCalling").replace(/\{callsign\}/g, newStationInfo.callsign)
     addToLog(cqText, "station")
 
-    // 次のステップの入力を設定
+    // 次のステップの入力を設定 - プレースホルダーを置換
     const nextInput = t("answerCq")
-      .replace("{theirCallsign}", newStationInfo.callsign)
-      .replace("{myCallsign}", myCallsign.trim().toUpperCase())
+      .replace(/\{theirCallsign\}/g, newStationInfo.callsign)
+      .replace(/\{myCallsign\}/g, formattedCallsign)
     setExpectedInput(nextInput)
     setInputMode("send")
   }
@@ -97,6 +116,7 @@ export default function MorseQSOSimulator() {
     setIsPlaying(false)
     setUserInput("")
     setExpectedInput("")
+    setInputMode("listen")
   }
 
   // QSOを続ける
@@ -110,7 +130,7 @@ export default function MorseQSOSimulator() {
     advanceQSOStage()
   }
 
-  // QSOのステージを進める
+  // QSOのステージを進める関数を修正
   const advanceQSOStage = () => {
     switch (qsoStage) {
       case QSOStage.CQ_CALL:
@@ -122,8 +142,8 @@ export default function MorseQSOSimulator() {
         // 最初の情報交換（相手局から）
         setQsoStage(QSOStage.EXCHANGE_1)
         const exchange1Text = t("initialExchange")
-          .replace("{myCallsign}", myCallsign)
-          .replace("{theirCallsign}", stationInfo.callsign)
+          .replace(/\{myCallsign\}/g, myCallsign)
+          .replace(/\{theirCallsign\}/g, stationInfo.callsign)
           .replace(/\{rst\}/g, stationInfo.rst)
           .replace(/\{name\}/g, stationInfo.name)
           .replace(/\{qth\}/g, stationInfo.qth)
@@ -131,8 +151,8 @@ export default function MorseQSOSimulator() {
 
         // 次のステップの入力を設定
         const nextInput = t("returnExchange")
-          .replace("{theirCallsign}", stationInfo.callsign)
-          .replace("{myCallsign}", myCallsign)
+          .replace(/\{theirCallsign\}/g, stationInfo.callsign)
+          .replace(/\{myCallsign\}/g, myCallsign)
           .replace(/\{rst\}/g, "599")
           .replace(/\{name\}/g, "OP")
           .replace(/\{qth\}/g, "TOKYO")
@@ -152,14 +172,14 @@ export default function MorseQSOSimulator() {
         // 最終メッセージ（相手局から）
         setQsoStage(QSOStage.FINAL)
         const finalText = t("finalMessage")
-          .replace("{myCallsign}", myCallsign)
-          .replace("{theirCallsign}", stationInfo.callsign)
+          .replace(/\{myCallsign\}/g, myCallsign)
+          .replace(/\{theirCallsign\}/g, stationInfo.callsign)
         addToLog(finalText, "station")
 
         // 次のステップの入力を設定
         const goodbyeInput = t("goodbye")
-          .replace("{theirCallsign}", stationInfo.callsign)
-          .replace("{myCallsign}", myCallsign)
+          .replace(/\{theirCallsign\}/g, stationInfo.callsign)
+          .replace(/\{myCallsign\}/g, myCallsign)
         setExpectedInput(goodbyeInput)
         setInputMode("send")
         break
@@ -179,17 +199,6 @@ export default function MorseQSOSimulator() {
     }
   }
 
-  // ログにメッセージを追加
-  const addToLog = (text: string, sender: "me" | "station") => {
-    const morse = textToMorse(text)
-    setQsoLog((prev) => [...prev, { text, morse, sender }])
-
-    // 自動再生
-    if (sender === "station" && autoAdvance) {
-      playMorseAudio(morse)
-    }
-  }
-
   // ユーザーの入力を送信
   const sendUserInput = () => {
     if (!userInput.trim()) return
@@ -206,6 +215,26 @@ export default function MorseQSOSimulator() {
     }, 1000)
   }
 
+  // ログにメッセージを追加する関数を修正
+  const addToLog = (text: string, sender: "me" | "station") => {
+    const morse = textToMorse(text)
+
+    // 現在のコールサインを使用してログエントリを作成
+    const logEntry = {
+      text,
+      morse,
+      sender,
+      callsign: sender === "me" ? myCallsign : stationInfo?.callsign || "",
+    }
+
+    setQsoLog((prev) => [...prev, logEntry])
+
+    // 自動再生
+    if (sender === "station" && autoAdvance) {
+      playMorseAudio(morse)
+    }
+  }
+
   // モールス符号を音声で再生する関数
   const playMorseAudio = (morse: string) => {
     if (isPlaying) return
@@ -214,7 +243,11 @@ export default function MorseQSOSimulator() {
     setCurrentMessage(morse)
 
     if (!audioContext.current) {
-      audioContext.current = new (window.AudioContext || (window as any).webkitAudioContext)()
+      // Node.js v22.14.0対応のためにオプションを追加
+      audioContext.current = new (window.AudioContext || (window as any).webkitAudioContext)({
+        latencyHint: "interactive",
+        sampleRate: 44100,
+      })
     }
 
     const { dotDuration, dashDuration, symbolGap, letterGap, wordGap } = speedSettings[playbackSpeed]
@@ -223,7 +256,7 @@ export default function MorseQSOSimulator() {
 
     // スペースで分割して文字ごとに処理
     morse.split(" ").forEach((letter, letterIndex) => {
-      // 文字内の各シンボル（ドッ��とダッシュ）を処理
+      // 文字内の各シンボル（ドットとダッシュ）を処理
       letter.split("").forEach((symbol, symbolIndex) => {
         if (symbol === "." || symbol === "-") {
           const duration = symbol === "." ? dotDuration : dashDuration
@@ -297,9 +330,53 @@ export default function MorseQSOSimulator() {
   return (
     <div className="space-y-6">
       <Card>
-        <CardHeader>
-          <CardTitle>{t("qsoSimulatorTitle")}</CardTitle>
-          <CardDescription>{t("qsoSimulatorDescription")}</CardDescription>
+        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+          <div>
+            <CardTitle>{t("qsoSimulatorTitle")}</CardTitle>
+            <CardDescription>{t("qsoSimulatorDescription")}</CardDescription>
+          </div>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button variant="outline" size="icon">
+                <HelpCircle className="h-4 w-4" />
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="max-w-3xl">
+              <DialogHeader>
+                <DialogTitle>
+                  {t("qsoSimulatorTitle")} - {t("howToUse")}
+                </DialogTitle>
+                <DialogDescription>{t("qsoSimulatorHelpDescription")}</DialogDescription>
+              </DialogHeader>
+              <div className="space-y-4 py-4">
+                <div className="space-y-2">
+                  <h3 className="font-medium">{t("qsoSimulatorHelpSteps")}</h3>
+                  <ol className="list-decimal list-inside space-y-2">
+                    <li>{t("qsoSimulatorHelpStep1")}</li>
+                    <li>{t("qsoSimulatorHelpStep2")}</li>
+                    <li>{t("qsoSimulatorHelpStep3")}</li>
+                    <li>{t("qsoSimulatorHelpStep4")}</li>
+                    <li>{t("qsoSimulatorHelpStep5")}</li>
+                    <li>{t("qsoSimulatorHelpStep6")}</li>
+                  </ol>
+                </div>
+                <div className="space-y-2">
+                  <h3 className="font-medium">{t("qsoSimulatorHelpTips")}</h3>
+                  <ul className="list-disc list-inside space-y-2">
+                    <li>{t("qsoSimulatorHelpTip1")}</li>
+                    <li>{t("qsoSimulatorHelpTip2")}</li>
+                    <li>{t("qsoSimulatorHelpTip3")}</li>
+                    <li>{t("qsoSimulatorHelpTip4")}</li>
+                  </ul>
+                </div>
+              </div>
+              <DialogFooter>
+                <DialogClose asChild>
+                  <Button>{t("close")}</Button>
+                </DialogClose>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
         </CardHeader>
 
         <CardContent className="space-y-6">
@@ -381,7 +458,9 @@ export default function MorseQSOSimulator() {
                       }`}
                     >
                       <div className="flex justify-between items-center mb-1">
-                        <Badge variant="outline">{entry.sender === "me" ? myCallsign : stationInfo?.callsign}</Badge>
+                        <Badge variant="outline" className="font-mono font-bold">
+                          {entry.callsign || (entry.sender === "me" ? myCallsign : stationInfo?.callsign)}
+                        </Badge>
                         <Button
                           variant="ghost"
                           size="sm"

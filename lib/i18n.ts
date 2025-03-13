@@ -22,6 +22,8 @@ export const translations = {
     answer: "正解",
     nextQuestion: "次の問題",
     accuracyRate: "正解率",
+    close: "閉じる",
+    howToUse: "使い方",
 
     // メインタブ
     morseCode: "モールス符号",
@@ -92,6 +94,22 @@ export const translations = {
     qsoSimulatorTitle: "交信シミュレーター",
     qsoSimulatorDescription:
       "モールス符号での交信を疑似体験できます。自分のコールサインを入力して、世界中の局との交信を練習しましょう。",
+    qsoSimulatorHelpDescription:
+      "交信シミュレーターを使って、モールス符号でのQSO（交信）を練習できます。実際の交信の流れに沿って、相手局とのやり取りを体験しましょう。",
+    qsoSimulatorHelpSteps: "基本的な使い方",
+    qsoSimulatorHelpStep1: "あなたのコールサイン（例：JA1ZRL）を入力して「交信を開始」をクリックします。",
+    qsoSimulatorHelpStep2:
+      "相手局からのCQ（一般呼び出し）を聞きます。「再生」ボタンをクリックすると音声で聞くこともできます。",
+    qsoSimulatorHelpStep3:
+      "あなたの番になったら、「送信」ボックスにメッセージを入力します。わからない場合は「答えを見る」をクリックすると適切な応答が表示されます。",
+    qsoSimulatorHelpStep4: "「送信」ボタンをクリックしてメッセージを送信します。",
+    qsoSimulatorHelpStep5: "相手局からの応答を聞き、交互に会話を続けます。",
+    qsoSimulatorHelpStep6: "交信が完了すると、新しい交信を始めることができます。",
+    qsoSimulatorHelpTips: "便利なヒント",
+    qsoSimulatorHelpTip1: "「自動進行」をオンにすると、相手局のメッセージが自動的に再生されます。",
+    qsoSimulatorHelpTip2: "「再生速度」を調整して、モールス符号の速度を自分のレベルに合わせることができます。",
+    qsoSimulatorHelpTip3: "「モールス符号を表示」と「平文を表示」のオプションで、表示内容をカスタマイズできます。",
+    qsoSimulatorHelpTip4: "実際の交信では定型文が多く使われるので、繰り返し練習することで上達します。",
     yourCallsign: "あなたのコールサイン",
     enterYourCallsign: "あなたのコールサインを入力",
     startQSO: "交信を開始",
@@ -154,6 +172,8 @@ export const translations = {
     answer: "Answer",
     nextQuestion: "Next Question",
     accuracyRate: "Accuracy",
+    close: "Close",
+    howToUse: "How to Use",
 
     // Main tabs
     morseCode: "Morse Code",
@@ -224,6 +244,22 @@ export const translations = {
     qsoSimulatorTitle: "QSO Simulator",
     qsoSimulatorDescription:
       "Experience simulated Morse code QSOs. Enter your callsign and practice communicating with stations from around the world.",
+    qsoSimulatorHelpDescription:
+      "Use the QSO Simulator to practice Morse code QSOs (contacts). Experience the flow of a real QSO by exchanging messages with a simulated station.",
+    qsoSimulatorHelpSteps: "Basic Usage",
+    qsoSimulatorHelpStep1: "Enter your callsign (e.g., W1AW) and click 'Start QSO'.",
+    qsoSimulatorHelpStep2:
+      "Listen to the CQ (general call) from the other station. You can click 'Play' to hear it in Morse code.",
+    qsoSimulatorHelpStep3:
+      "When it's your turn, type your message in the 'Send' box. If you're not sure what to say, click 'Show Answer' for the appropriate response.",
+    qsoSimulatorHelpStep4: "Click the 'Send' button to transmit your message.",
+    qsoSimulatorHelpStep5: "Listen to the response from the other station and continue the conversation.",
+    qsoSimulatorHelpStep6: "When the QSO is complete, you can start a new one.",
+    qsoSimulatorHelpTips: "Helpful Tips",
+    qsoSimulatorHelpTip1: "Turn on 'Auto Advance' to automatically play the other station's messages.",
+    qsoSimulatorHelpTip2: "Adjust the 'Playback Speed' to match your skill level.",
+    qsoSimulatorHelpTip3: "Customize your view with the 'Show Morse Text' and 'Show Plain Text' options.",
+    qsoSimulatorHelpTip4: "Real QSOs often use standard phrases, so practice will help you become familiar with them.",
     yourCallsign: "Your Callsign",
     enterYourCallsign: "Enter your callsign",
     startQSO: "Start QSO",
@@ -283,7 +319,7 @@ type LanguageContextType = {
 // デフォルト値
 const defaultLanguageContext: LanguageContextType = {
   language: "ja",
-  setLanguage: () => { },
+  setLanguage: () => {},
   t: (key) => key as string,
 }
 

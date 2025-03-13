@@ -38,7 +38,11 @@ export default function AudioPlayer() {
 
   const initAudio = () => {
     if (!audioContext.current) {
-      audioContext.current = new (window.AudioContext || (window as any).webkitAudioContext)()
+      // Node.js v22.14.0対応のためにオプションを追加
+      audioContext.current = new (window.AudioContext || (window as any).webkitAudioContext)({
+        latencyHint: "interactive",
+        sampleRate: 44100,
+      })
       gainNode.current = audioContext.current.createGain()
       gainNode.current.connect(audioContext.current.destination)
     }
