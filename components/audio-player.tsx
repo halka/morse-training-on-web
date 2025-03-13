@@ -7,6 +7,7 @@ import { Slider } from "@/components/ui/slider"
 import { textToMorse } from "@/lib/morse-code"
 import { Play, Pause, Volume2, VolumeX } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { useLanguage } from "@/lib/i18n"
 
 export default function AudioPlayer() {
   const [text, setText] = useState("")
@@ -15,6 +16,7 @@ export default function AudioPlayer() {
   const [volume, setVolume] = useState(0.5)
   const [speed, setSpeed] = useState(1)
   const [isMuted, setIsMuted] = useState(false)
+  const { t } = useLanguage()
 
   const audioContext = useRef<AudioContext | null>(null)
   const oscillator = useRef<OscillatorNode | null>(null)
@@ -113,13 +115,13 @@ export default function AudioPlayer() {
     <div className="space-y-6">
       <Card>
         <CardHeader>
-          <CardTitle>モールス符号音声プレーヤー</CardTitle>
+          <CardTitle>{t("morseConverter")}</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
-            <Input type="text" placeholder="テキストを入力" value={text} onChange={(e) => setText(e.target.value)} />
+            <Input type="text" placeholder={t("enterText")} value={text} onChange={(e) => setText(e.target.value)} />
             <Button onClick={convertToMorse} className="w-full">
-              モールス符号に変換
+              {t("convertToMorse")}
             </Button>
           </div>
 
@@ -129,7 +131,7 @@ export default function AudioPlayer() {
 
               <div className="space-y-4">
                 <div className="flex items-center gap-4">
-                  <span className="min-w-[80px]">音量:</span>
+                  <span className="min-w-[80px]">{t("volume")}:</span>
                   <Button variant="outline" size="icon" className="h-8 w-8" onClick={toggleMute}>
                     {isMuted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
                   </Button>
@@ -144,7 +146,7 @@ export default function AudioPlayer() {
                 </div>
 
                 <div className="flex items-center gap-4">
-                  <span className="min-w-[80px]">速度:</span>
+                  <span className="min-w-[80px]">{t("speed")}:</span>
                   <Slider value={[speed]} min={0.5} max={2} step={0.1} onValueChange={(value) => setSpeed(value[0])} />
                   <span className="min-w-[40px] text-right">{speed}x</span>
                 </div>
@@ -153,11 +155,11 @@ export default function AudioPlayer() {
               <Button className="w-full" onClick={isPlaying ? stopPlayback : playMorseCode} disabled={!morseCode}>
                 {isPlaying ? (
                   <>
-                    <Pause className="mr-2 h-4 w-4" /> 停止
+                    <Pause className="mr-2 h-4 w-4" /> {t("stop")}
                   </>
                 ) : (
                   <>
-                    <Play className="mr-2 h-4 w-4" /> 再生
+                    <Play className="mr-2 h-4 w-4" /> {t("play")}
                   </>
                 )}
               </Button>

@@ -2,21 +2,28 @@
 
 import { useState } from "react"
 import { Input } from "@/components/ui/input"
-import { getHamRadioCategories, getHamRadioByCategory } from "@/lib/morse-code"
+import { getHamRadioCategories, getLocalizedHamRadioData } from "@/lib/morse-code"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card"
 import { Search, Volume2 } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { useLanguage } from "@/lib/i18n"
 
 export default function HamRadioCodes() {
   const [searchTerm, setSearchTerm] = useState("")
   const [selectedCategory, setSelectedCategory] = useState<string | undefined>(undefined)
   const [viewMode, setViewMode] = useState<"list" | "cards">("cards")
   const categories = getHamRadioCategories()
+  const { t, language } = useLanguage()
 
-  const filteredData = Object.entries(getHamRadioByCategory(selectedCategory)).filter(
+  const hamRadioData = getLocalizedHamRadioData(language)
+  const filteredData = Object.entries(
+    selectedCategory
+      ? Object.fromEntries(Object.entries(hamRadioData).filter(([_, data]) => data.category === selectedCategory))
+      : hamRadioData,
+  ).filter(
     ([code, data]) =>
       code.toLowerCase().includes(searchTerm.toLowerCase()) ||
       data.morse.includes(searchTerm) ||
@@ -87,7 +94,7 @@ export default function HamRadioCodes() {
           <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input
             type="text"
-            placeholder="符号、意味、説明で検索"
+            placeholder={t("searchByCodeMeaningDesc")}
             className="pl-8"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -99,10 +106,10 @@ export default function HamRadioCodes() {
           onValueChange={(value) => setSelectedCategory(value === "all" ? undefined : value)}
         >
           <SelectTrigger className="w-full sm:w-[180px]">
-            <SelectValue placeholder="カテゴリー" />
+            <SelectValue placeholder={t("category")} />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">すべて</SelectItem>
+            <SelectItem value="all">{t("all")}</SelectItem>
             {categories.map((category) => (
               <SelectItem key={category} value={category}>
                 {category}
@@ -113,8 +120,8 @@ export default function HamRadioCodes() {
 
         <Tabs value={viewMode} onValueChange={(v) => setViewMode(v as "list" | "cards")} className="w-full sm:w-auto">
           <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="cards">カード表示</TabsTrigger>
-            <TabsTrigger value="list">リスト表示</TabsTrigger>
+            <TabsTrigger value="cards">{t("cardView")}</TabsTrigger>
+            <TabsTrigger value="list">{t("listView")}</TabsTrigger>
           </TabsList>
         </Tabs>
       </div>
@@ -137,7 +144,7 @@ export default function HamRadioCodes() {
               <CardFooter>
                 <Button variant="ghost" size="sm" className="ml-auto" onClick={() => playMorseAudio(data.morse)}>
                   <Volume2 className="h-4 w-4 mr-2" />
-                  再生
+                  {t("play")}
                 </Button>
               </CardFooter>
             </Card>
@@ -158,7 +165,7 @@ export default function HamRadioCodes() {
                 </div>
                 <Button variant="ghost" size="sm" onClick={() => playMorseAudio(data.morse)}>
                   <Volume2 className="h-4 w-4 mr-2" />
-                  再生
+                  {t("play")}
                 </Button>
               </div>
               <p className="text-sm text-muted-foreground mt-1">{data.description}</p>
@@ -167,11 +174,7 @@ export default function HamRadioCodes() {
         </div>
       )}
 
-      {filteredData.length === 0 && (
-        <div className="text-center p-8 text-muted-foreground">
-          検索結果がありません。別のキーワードで検索してください。
-        </div>
-      )}
+      {filteredData.length === 0 && <div className="text-center p-8 text-muted-foreground">{t("noResults")}</div>}
     </div>
   )
 }

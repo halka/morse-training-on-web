@@ -2,15 +2,18 @@
 
 import { useState } from "react"
 import { Input } from "@/components/ui/input"
-import { qCodesData } from "@/lib/morse-code"
+import { getLocalizedQCodesData } from "@/lib/morse-code"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Search } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { useLanguage } from "@/lib/i18n"
 
 export default function QCodes() {
   const [searchTerm, setSearchTerm] = useState("")
   const [viewMode, setViewMode] = useState<"list" | "cards">("cards")
+  const { t, language } = useLanguage()
+  const qCodesData = getLocalizedQCodesData(language)
 
   const filteredData = Object.entries(qCodesData).filter(
     ([code, data]) =>
@@ -26,7 +29,7 @@ export default function QCodes() {
           <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input
             type="text"
-            placeholder="Q符号または意味で検索"
+            placeholder={t("searchByCodeOrMeaning")}
             className="pl-8"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -34,8 +37,8 @@ export default function QCodes() {
         </div>
         <Tabs value={viewMode} onValueChange={(v) => setViewMode(v as "list" | "cards")} className="w-full sm:w-auto">
           <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="cards">カード表示</TabsTrigger>
-            <TabsTrigger value="list">リスト表示</TabsTrigger>
+            <TabsTrigger value="cards">{t("cardView")}</TabsTrigger>
+            <TabsTrigger value="list">{t("listView")}</TabsTrigger>
           </TabsList>
         </Tabs>
       </div>
@@ -76,11 +79,7 @@ export default function QCodes() {
         </div>
       )}
 
-      {filteredData.length === 0 && (
-        <div className="text-center p-8 text-muted-foreground">
-          検索結果がありません。別のキーワードで検索してください。
-        </div>
-      )}
+      {filteredData.length === 0 && <div className="text-center p-8 text-muted-foreground">{t("noResults")}</div>}
     </div>
   )
 }

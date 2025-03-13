@@ -6,10 +6,11 @@ import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/componen
 import { Badge } from "@/components/ui/badge"
 import { AlertCircle, CheckCircle, HelpCircle, Volume2 } from "lucide-react"
 import { Progress } from "@/components/ui/progress"
-import { getHamRadioCategories, getHamRadioByCategory } from "@/lib/morse-code"
+import { getHamRadioCategories, getLocalizedHamRadioData } from "@/lib/morse-code"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+import { useLanguage } from "@/lib/i18n"
 
 type PracticeMode = "codeToMeaning" | "meaningToCode" | "morseToCode"
 
@@ -23,9 +24,13 @@ export default function HamRadioPractice() {
   const [totalQuestions, setTotalQuestions] = useState(0)
   const [showAnswer, setShowAnswer] = useState(false)
   const [selectedCategory, setSelectedCategory] = useState<string | undefined>(undefined)
+  const { t, language } = useLanguage()
 
   const categories = getHamRadioCategories()
-  const codesData = getHamRadioByCategory(selectedCategory)
+  const hamRadioData = getLocalizedHamRadioData(language)
+  const codesData = selectedCategory
+    ? Object.fromEntries(Object.entries(hamRadioData).filter(([_, data]) => data.category === selectedCategory))
+    : hamRadioData
   const codes = Object.keys(codesData)
 
   // 問題を生成する関数
@@ -192,12 +197,12 @@ export default function HamRadioPractice() {
         <div className="flex flex-col sm:flex-row gap-2 items-start sm:items-center">
           <Select value={mode} onValueChange={(value) => handleModeChange(value as PracticeMode)}>
             <SelectTrigger className="w-full sm:w-[200px]">
-              <SelectValue placeholder="練習モード" />
+              <SelectValue placeholder={t("practice")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="codeToMeaning">符号 → 意味</SelectItem>
-              <SelectItem value="meaningToCode">意味 → 符号</SelectItem>
-              <SelectItem value="morseToCode">モールス符号 → 符号</SelectItem>
+              <SelectItem value="codeToMeaning">{t("codeToMeaning")}</SelectItem>
+              <SelectItem value="meaningToCode">{t("meaningToCode")}</SelectItem>
+              <SelectItem value="morseToCode">{t("morseToCode")}</SelectItem>
             </SelectContent>
           </Select>
 
@@ -206,10 +211,10 @@ export default function HamRadioPractice() {
             onValueChange={(value) => setSelectedCategory(value === "all" ? undefined : value)}
           >
             <SelectTrigger className="w-full sm:w-[180px]">
-              <SelectValue placeholder="カテゴリー" />
+              <SelectValue placeholder={t("category")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">すべて</SelectItem>
+              <SelectItem value="all">{t("all")}</SelectItem>
               {categories.map((category) => (
                 <SelectItem key={category} value={category}>
                   {category}
@@ -220,7 +225,7 @@ export default function HamRadioPractice() {
         </div>
 
         <div className="flex items-center gap-2">
-          <span className="text-sm font-medium">正解率:</span>
+          <span className="text-sm font-medium">{t("accuracyRate")}:</span>
           <Badge variant="outline">{totalQuestions > 0 ? Math.round((score / totalQuestions) * 100) : 0}%</Badge>
         </div>
       </div>
@@ -230,7 +235,7 @@ export default function HamRadioPractice() {
       {codes.length === 0 ? (
         <Card>
           <CardContent className="p-6 text-center">
-            <p>選択したカテゴリーには符号がありません。別のカテゴリーを選択してください。</p>
+            <p>{t("noCategoryItems")}</p>
           </CardContent>
         </Card>
       ) : (
@@ -238,10 +243,10 @@ export default function HamRadioPractice() {
           <CardHeader>
             <CardTitle className="text-center">
               {mode === "codeToMeaning"
-                ? "この符号の意味は？"
+                ? t("whatMeaningForCode")
                 : mode === "meaningToCode"
-                  ? "この意味の符号は？"
-                  : "このモールス符号の符号は？"}
+                  ? t("whatCodeForMeaning")
+                  : t("whatCodeForMorse")}
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -253,7 +258,7 @@ export default function HamRadioPractice() {
               {mode === "morseToCode" && (
                 <Button variant="outline" size="sm" onClick={() => playMorseAudio(currentQuestion)}>
                   <Volume2 className="h-4 w-4 mr-2" />
-                  モールス符号を再生
+                  {t("playMorse")}
                 </Button>
               )}
             </div>
@@ -273,16 +278,16 @@ export default function HamRadioPractice() {
             {isCorrect === null && !showAnswer ? (
               <div className="flex gap-2 w-full">
                 <Button onClick={checkAnswer} disabled={!selectedAnswer} className="flex-1">
-                  回答する
+                  {t("submit")}
                 </Button>
                 <Button onClick={revealAnswer} variant="outline" className="flex-1">
                   <HelpCircle className="h-4 w-4 mr-2" />
-                  答えを見る
+                  {t("showAnswer")}
                 </Button>
               </div>
             ) : (
               <Button onClick={handleNextQuestion} className="w-full">
-                次の問題
+                {t("nextQuestion")}
               </Button>
             )}
 
@@ -291,13 +296,13 @@ export default function HamRadioPractice() {
                 className={`flex items-center justify-center gap-2 ${isCorrect ? "text-green-500" : "text-red-500"}`}
               >
                 {isCorrect ? <CheckCircle className="h-5 w-5" /> : <AlertCircle className="h-5 w-5" />}
-                <span>{isCorrect ? "正解です！" : "不正解です。"}</span>
+                <span>{isCorrect ? t("correct") : t("incorrect")}</span>
               </div>
             )}
 
             {(showAnswer || isCorrect === false) && (
               <div className="text-center p-2 bg-muted/30 rounded-md w-full">
-                <span className="font-medium">正解: </span>
+                <span className="font-medium">{t("answer")}: </span>
                 {mode === "codeToMeaning" ? (
                   <span>{codesData[currentQuestion].meaning}</span>
                 ) : mode === "meaningToCode" ? (

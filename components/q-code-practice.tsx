@@ -2,13 +2,14 @@
 
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
-import { qCodesData } from "@/lib/morse-code"
+import { getLocalizedQCodesData } from "@/lib/morse-code"
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { AlertCircle, CheckCircle, HelpCircle } from "lucide-react"
 import { Progress } from "@/components/ui/progress"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Label } from "@/components/ui/label"
+import { useLanguage } from "@/lib/i18n"
 
 type PracticeMode = "codeToMeaning" | "meaningToCode"
 
@@ -21,6 +22,8 @@ export default function QCodePractice() {
   const [score, setScore] = useState(0)
   const [totalQuestions, setTotalQuestions] = useState(0)
   const [showAnswer, setShowAnswer] = useState(false)
+  const { t, language } = useLanguage()
+  const qCodesData = getLocalizedQCodesData(language)
 
   const qCodes = Object.keys(qCodesData)
 
@@ -91,10 +94,10 @@ export default function QCodePractice() {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <Button onClick={toggleMode} variant="outline">
-          {mode === "codeToMeaning" ? "Q符号 → 意味" : "意味 → Q符号"}
+          {mode === "codeToMeaning" ? t("codeToMeaning") : t("meaningToCode")}
         </Button>
         <div className="flex items-center gap-2">
-          <span className="text-sm font-medium">正解率:</span>
+          <span className="text-sm font-medium">{t("accuracyRate")}:</span>
           <Badge variant="outline">{totalQuestions > 0 ? Math.round((score / totalQuestions) * 100) : 0}%</Badge>
         </div>
       </div>
@@ -104,7 +107,7 @@ export default function QCodePractice() {
       <Card>
         <CardHeader>
           <CardTitle className="text-center">
-            {mode === "codeToMeaning" ? "このQ符号の意味は？" : "この意味のQ符号は？"}
+            {mode === "codeToMeaning" ? t("whatMeaningForCode") : t("whatCodeForMeaning")}
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -125,29 +128,29 @@ export default function QCodePractice() {
           {isCorrect === null && !showAnswer ? (
             <div className="flex gap-2 w-full">
               <Button onClick={checkAnswer} disabled={!selectedAnswer} className="flex-1">
-                回答する
+                {t("submit")}
               </Button>
               <Button onClick={revealAnswer} variant="outline" className="flex-1">
                 <HelpCircle className="h-4 w-4 mr-2" />
-                答えを見る
+                {t("showAnswer")}
               </Button>
             </div>
           ) : (
             <Button onClick={handleNextQuestion} className="w-full">
-              次の問題
+              {t("nextQuestion")}
             </Button>
           )}
 
           {isCorrect !== null && (
             <div className={`flex items-center justify-center gap-2 ${isCorrect ? "text-green-500" : "text-red-500"}`}>
               {isCorrect ? <CheckCircle className="h-5 w-5" /> : <AlertCircle className="h-5 w-5" />}
-              <span>{isCorrect ? "正解です！" : "不正解です。"}</span>
+              <span>{isCorrect ? t("correct") : t("incorrect")}</span>
             </div>
           )}
 
           {(showAnswer || isCorrect === false) && (
             <div className="text-center p-2 bg-muted/30 rounded-md w-full">
-              <span className="font-medium">正解: </span>
+              <span className="font-medium">{t("answer")}: </span>
               {mode === "codeToMeaning" ? (
                 <span>{qCodesData[currentQuestion].meaning}</span>
               ) : (
