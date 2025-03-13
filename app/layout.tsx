@@ -1,26 +1,28 @@
 import type React from "react"
+import "./globals.css"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
-import "./globals.css"
-import { ThemeProvider } from "@/lib/theme-provider"
+import { ThemeProvider } from "@/providers/theme-provider"
 
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "アマチュア無線のなんらか",
-  description: "モールス符号とかをカジュアルに学ぶぞ！",
+  title: "アマチュア無線暗記カード",
+  description: "アマチュア無線の法規と工学の問題を学習するためのフラッシュカードアプリ",
     generator: 'v0.dev'
 }
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode
-}>) {
+}) {
   return (
     <html lang="ja" suppressHydrationWarning>
       <body className={inter.className}>
-        <ThemeProvider defaultTheme="system">{children}</ThemeProvider>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   )

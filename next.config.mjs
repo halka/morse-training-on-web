@@ -21,8 +21,6 @@ const nextConfig = {
     parallelServerBuildTraces: true,
     parallelServerCompiles: true,
   },
-  reactStrictMode: true,
-  output: 'standalone',
 }
 
 mergeConfig(nextConfig, userConfig)
@@ -48,4 +46,3 @@ function mergeConfig(nextConfig, userConfig) {
 }
 
 export default nextConfig
-
