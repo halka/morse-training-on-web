@@ -283,7 +283,7 @@ type LanguageContextType = {
 // デフォルト値
 const defaultLanguageContext: LanguageContextType = {
   language: "ja",
-  setLanguage: () => {},
+  setLanguage: () => { },
   t: (key) => key as string,
 }
 
