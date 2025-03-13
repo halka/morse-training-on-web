@@ -197,16 +197,16 @@ export default function HamRadioPractice() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <div className="flex flex-col sm:flex-row gap-2 items-start sm:items-center">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4 mb-4">
+        <div className="flex flex-col sm:flex-row gap-2 items-start sm:items-center w-full sm:w-auto">
           <Select value={mode} onValueChange={(value) => handleModeChange(value as PracticeMode)}>
             <SelectTrigger className="w-full sm:w-[200px]">
-              <SelectValue placeholder={t("practice")} />
+              <SelectValue placeholder={t("common.practice")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="codeToMeaning">{t("codeToMeaning")}</SelectItem>
-              <SelectItem value="meaningToCode">{t("meaningToCode")}</SelectItem>
-              <SelectItem value="morseToCode">{t("morseToCode")}</SelectItem>
+              <SelectItem value="codeToMeaning">{t("codes.codeToMeaning")}</SelectItem>
+              <SelectItem value="meaningToCode">{t("codes.meaningToCode")}</SelectItem>
+              <SelectItem value="morseToCode">{t("codes.morseToCode")}</SelectItem>
             </SelectContent>
           </Select>
 
@@ -215,10 +215,10 @@ export default function HamRadioPractice() {
             onValueChange={(value) => setSelectedCategory(value === "all" ? undefined : value)}
           >
             <SelectTrigger className="w-full sm:w-[180px]">
-              <SelectValue placeholder={t("category")} />
+              <SelectValue placeholder={t("codes.category")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">{t("all")}</SelectItem>
+              <SelectItem value="all">{t("codes.all")}</SelectItem>
               {categories.map((category) => (
                 <SelectItem key={category} value={category}>
                   {category}
@@ -228,8 +228,8 @@ export default function HamRadioPractice() {
           </Select>
         </div>
 
-        <div className="flex items-center gap-2">
-          <span className="text-sm font-medium">{t("accuracyRate")}:</span>
+        <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
+          <span className="text-xs sm:text-sm font-medium">{t("common.accuracyRate")}:</span>
           <Badge variant="outline">{totalQuestions > 0 ? Math.round((score / totalQuestions) * 100) : 0}%</Badge>
         </div>
       </div>
@@ -239,7 +239,7 @@ export default function HamRadioPractice() {
       {codes.length === 0 ? (
         <Card>
           <CardContent className="p-6 text-center">
-            <p>{t("noCategoryItems")}</p>
+            <p>{t("codes.noCategoryItems")}</p>
           </CardContent>
         </Card>
       ) : (
@@ -247,22 +247,22 @@ export default function HamRadioPractice() {
           <CardHeader>
             <CardTitle className="text-center">
               {mode === "codeToMeaning"
-                ? t("whatMeaningForCode")
+                ? t("codes.whatMeaningForCode")
                 : mode === "meaningToCode"
-                  ? t("whatCodeForMeaning")
-                  : t("whatCodeForMorse")}
+                  ? t("codes.whatCodeForMeaning")
+                  : t("codes.whatCodeForMorse")}
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-3 sm:space-y-4 p-3 sm:p-4">
             <div className="flex flex-col items-center gap-2">
-              <div className="text-2xl font-bold text-center p-4 bg-muted/30 rounded-md w-full break-all">
+              <div className="text-xl sm:text-2xl font-bold text-center p-3 sm:p-4 bg-muted/30 rounded-md w-full break-all">
                 {currentQuestion}
               </div>
 
               {mode === "morseToCode" && (
                 <Button variant="outline" size="sm" onClick={() => playMorseAudio(currentQuestion)}>
-                  <Volume2 className="h-4 w-4 mr-2" />
-                  {t("playMorse")}
+                  <Volume2 className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+                  {t("morse.playMorse")}
                 </Button>
               )}
             </div>
@@ -271,7 +271,7 @@ export default function HamRadioPractice() {
               {options.map((option, index) => (
                 <div key={index} className="flex items-center space-x-2 p-2 rounded-md hover:bg-muted/50">
                   <RadioGroupItem value={option} id={`option-${index}`} disabled={isCorrect !== null} />
-                  <Label htmlFor={`option-${index}`} className="flex-1 cursor-pointer">
+                  <Label htmlFor={`option-${index}`} className="flex-1 cursor-pointer text-sm">
                     {option}
                   </Label>
                 </div>
@@ -282,16 +282,16 @@ export default function HamRadioPractice() {
             {isCorrect === null && !showAnswer ? (
               <div className="flex gap-2 w-full">
                 <Button onClick={checkAnswer} disabled={!selectedAnswer} className="flex-1">
-                  {t("submit")}
+                  {t("common.submit")}
                 </Button>
                 <Button onClick={revealAnswer} variant="outline" className="flex-1">
                   <HelpCircle className="h-4 w-4 mr-2" />
-                  {t("showAnswer")}
+                  {t("common.showAnswer")}
                 </Button>
               </div>
             ) : (
               <Button onClick={handleNextQuestion} className="w-full">
-                {t("nextQuestion")}
+                {t("common.nextQuestion")}
               </Button>
             )}
 
@@ -300,13 +300,13 @@ export default function HamRadioPractice() {
                 className={`flex items-center justify-center gap-2 ${isCorrect ? "text-green-500" : "text-red-500"}`}
               >
                 {isCorrect ? <CheckCircle className="h-5 w-5" /> : <AlertCircle className="h-5 w-5" />}
-                <span>{isCorrect ? t("correct") : t("incorrect")}</span>
+                <span>{isCorrect ? t("common.correct") : t("common.incorrect")}</span>
               </div>
             )}
 
             {(showAnswer || isCorrect === false) && (
               <div className="text-center p-2 bg-muted/30 rounded-md w-full">
-                <span className="font-medium">{t("answer")}: </span>
+                <span className="font-medium">{t("common.answer")}: </span>
                 {mode === "codeToMeaning" ? (
                   <span>{codesData[currentQuestion].meaning}</span>
                 ) : mode === "meaningToCode" ? (

@@ -16,10 +16,12 @@ export function LanguageToggle() {
       variant="ghost"
       size="icon"
       onClick={toggleLanguage}
-      title={language === "ja" ? t("switchToEnglish") : t("switchToJapanese")}
+      title={language === "ja" ? t("language.switchToEnglish") : t("language.switchToJapanese")}
     >
       <Languages className="h-5 w-5" />
-      <span className="sr-only">{language === "ja" ? t("switchToEnglish") : t("switchToJapanese")}</span>
+      <span className="sr-only">
+        {language === "ja" ? t("language.switchToEnglish") : t("language.switchToJapanese")}
+      </span>
     </Button>
   )
 }

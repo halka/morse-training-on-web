@@ -119,13 +119,18 @@ export default function AudioPlayer() {
     <div className="space-y-6">
       <Card>
         <CardHeader>
-          <CardTitle>{t("morseConverter")}</CardTitle>
+          <CardTitle>{t("morse.morseConverter")}</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
-            <Input type="text" placeholder={t("enterText")} value={text} onChange={(e) => setText(e.target.value)} />
+            <Input
+              type="text"
+              placeholder={t("morse.enterText")}
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+            />
             <Button onClick={convertToMorse} className="w-full">
-              {t("convertToMorse")}
+              {t("morse.convertToMorse")}
             </Button>
           </div>
 
@@ -135,7 +140,7 @@ export default function AudioPlayer() {
 
               <div className="space-y-4">
                 <div className="flex items-center gap-4">
-                  <span className="min-w-[80px]">{t("volume")}:</span>
+                  <span className="min-w-[80px]">{t("morse.volume")}:</span>
                   <Button variant="outline" size="icon" className="h-8 w-8" onClick={toggleMute}>
                     {isMuted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
                   </Button>
@@ -150,7 +155,7 @@ export default function AudioPlayer() {
                 </div>
 
                 <div className="flex items-center gap-4">
-                  <span className="min-w-[80px]">{t("speed")}:</span>
+                  <span className="min-w-[80px]">{t("morse.speed")}:</span>
                   <Slider value={[speed]} min={0.5} max={2} step={0.1} onValueChange={(value) => setSpeed(value[0])} />
                   <span className="min-w-[40px] text-right">{speed}x</span>
                 </div>
@@ -159,11 +164,11 @@ export default function AudioPlayer() {
               <Button className="w-full" onClick={isPlaying ? stopPlayback : playMorseCode} disabled={!morseCode}>
                 {isPlaying ? (
                   <>
-                    <Pause className="mr-2 h-4 w-4" /> {t("stop")}
+                    <Pause className="mr-2 h-4 w-4" /> {t("common.stop")}
                   </>
                 ) : (
                   <>
-                    <Play className="mr-2 h-4 w-4" /> {t("play")}
+                    <Play className="mr-2 h-4 w-4" /> {t("common.play")}
                   </>
                 )}
               </Button>

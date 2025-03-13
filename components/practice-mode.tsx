@@ -126,12 +126,12 @@ export default function PracticeMode() {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <Button onClick={toggleMode} variant="outline">
-          {mode === "textToMorse" ? t("charToMorse") : t("morseToChar")}
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 sm:gap-4 mb-4">
+        <Button onClick={toggleMode} variant="outline" className="w-full sm:w-auto text-sm">
+          {mode === "textToMorse" ? t("morse.charToMorse") : t("morse.morseToChar")}
         </Button>
-        <div className="flex items-center gap-2">
-          <span className="text-sm font-medium">{t("accuracyRate")}:</span>
+        <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
+          <span className="text-xs sm:text-sm font-medium">{t("common.accuracyRate")}:</span>
           <Badge variant="outline">{totalQuestions > 0 ? Math.round((score / totalQuestions) * 100) : 0}%</Badge>
         </div>
       </div>
@@ -141,60 +141,66 @@ export default function PracticeMode() {
       <Card>
         <CardHeader>
           <CardTitle className="text-center">
-            {mode === "textToMorse" ? t("whatMorseForChar") : t("whatCharForMorse")}
+            {mode === "textToMorse" ? t("morse.whatMorseForChar") : t("morse.whatCharForMorse")}
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-3 sm:space-y-4 p-3 sm:p-4">
           <div className="flex flex-col items-center gap-2">
-            <div className="text-4xl font-bold text-center">{currentQuestion}</div>
+            <div className="text-3xl sm:text-4xl font-bold text-center">{currentQuestion}</div>
 
             {mode === "morseToText" && (
               <Button variant="outline" size="sm" onClick={() => playMorseAudio(currentQuestion)}>
-                <Volume2 className="h-4 w-4 mr-2" />
-                {t("playMorse")}
+                <Volume2 className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+                {t("morse.playMorse")}
               </Button>
             )}
           </div>
 
-          <div className="space-y-4">
+          <div className="space-y-3 sm:space-y-4">
             <Input
               type="text"
-              placeholder={mode === "textToMorse" ? t("enterMorse") : t("enterChar")}
+              placeholder={mode === "textToMorse" ? t("morse.enterMorse") : t("morse.enterChar")}
               value={userAnswer}
               onChange={(e) => setUserAnswer(e.target.value)}
               className="text-center"
             />
 
             <div className="flex justify-center gap-2">
-              <Button onClick={checkAnswer}>{t("submit")}</Button>
-              <Button onClick={revealAnswer} variant="outline">
-                {t("showAnswer")}
+              <Button onClick={checkAnswer} className="text-sm">
+                {t("common.submit")}
+              </Button>
+              <Button onClick={revealAnswer} variant="outline" className="text-sm">
+                {t("common.showAnswer")}
               </Button>
             </div>
           </div>
 
           {isCorrect !== null && (
             <div className={`flex items-center justify-center gap-2 ${isCorrect ? "text-green-500" : "text-red-500"}`}>
-              {isCorrect ? <CheckCircle className="h-5 w-5" /> : <AlertCircle className="h-5 w-5" />}
-              <span>{isCorrect ? t("correct") : t("incorrect")}</span>
+              {isCorrect ? (
+                <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5" />
+              ) : (
+                <AlertCircle className="h-4 w-4 sm:h-5 sm:w-5" />
+              )}
+              <span className="text-sm">{isCorrect ? t("common.correct") : t("common.incorrect")}</span>
             </div>
           )}
 
           {(showAnswer || isCorrect === false) && (
             <div className="text-center">
-              <span className="font-medium">{t("answer")}: </span>
-              <span className="font-mono">
+              <span className="font-medium text-sm">{t("common.answer")}: </span>
+              <span className="font-mono text-sm">
                 {mode === "textToMorse" ? textToMorse(currentQuestion) : morseToText(currentQuestion)}
               </span>
               {mode === "textToMorse" && (
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="ml-2"
+                  className="ml-1 sm:ml-2"
                   onClick={() => playMorseAudio(textToMorse(currentQuestion))}
                 >
-                  <Volume2 className="h-4 w-4 mr-1" />
-                  {t("play")}
+                  <Volume2 className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
+                  {t("common.play")}
                 </Button>
               )}
             </div>
@@ -202,7 +208,9 @@ export default function PracticeMode() {
 
           {(isCorrect !== null || showAnswer) && (
             <div className="flex justify-center">
-              <Button onClick={handleNextQuestion}>{t("nextQuestion")}</Button>
+              <Button onClick={handleNextQuestion} className="text-sm">
+                {t("common.nextQuestion")}
+              </Button>
             </div>
           )}
         </CardContent>

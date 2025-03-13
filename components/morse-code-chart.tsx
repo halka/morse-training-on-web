@@ -82,7 +82,7 @@ export default function MorseCodeChart() {
         <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
         <Input
           type="text"
-          placeholder={t("searchByCharOrMorse")}
+          placeholder={t("morse.searchByCharOrMorse")}
           className="pl-8"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
@@ -92,14 +92,14 @@ export default function MorseCodeChart() {
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
         {filteredData.map(([char, code]) => (
           <Card key={char} className="hover:bg-accent transition-colors">
-            <CardContent className="p-4 text-center">
-              <div className="text-2xl font-bold">{char}</div>
-              <div className="text-lg font-mono mt-2">{code}</div>
+            <CardContent className="p-3 sm:p-4 text-center">
+              <div className="text-xl sm:text-2xl font-bold">{char}</div>
+              <div className="text-base sm:text-lg font-mono mt-1 sm:mt-2">{code}</div>
             </CardContent>
             <CardFooter className="p-2 pt-0 justify-center">
               <Button variant="ghost" size="sm" onClick={() => playMorseAudio(code)}>
-                <Volume2 className="h-4 w-4 mr-2" />
-                {t("play")}
+                <Volume2 className="h-4 w-4 mr-1 sm:mr-2" />
+                {t("common.play")}
               </Button>
             </CardFooter>
           </Card>

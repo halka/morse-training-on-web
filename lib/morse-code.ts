@@ -531,7 +531,7 @@ export const hamRadioData: Record<
       en: "Distance communication",
     },
     description: {
-      ja: "遠距離の局との通信を意味します。",
+      ja: "遠距離の局との通信を意味し��す。",
       en: "Refers to communication with distant stations.",
     },
     category: "一般的な略語",

@@ -275,12 +275,12 @@ export default function KeyInput() {
     <div className="space-y-6">
       <Card>
         <CardHeader>
-          <CardTitle>{t("keyerTitle")}</CardTitle>
-          <CardDescription>{t("keyerDescription")}</CardDescription>
+          <CardTitle>{t("keyer.keyerTitle")}</CardTitle>
+          <CardDescription>{t("keyer.keyerDescription")}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           {/* コントロールセクション - モバイル対応のレイアウト */}
-          <div className="flex flex-wrap gap-3 items-center justify-between">
+          <div className="flex flex-wrap gap-2 sm:gap-3 items-center justify-between">
             <Button
               onClick={isListening ? stopAudio : initAudio}
               variant={isListening ? "destructive" : "default"}
@@ -288,11 +288,11 @@ export default function KeyInput() {
             >
               {isListening ? (
                 <>
-                  <MicOff className="mr-2 h-4 w-4" /> {t("stop")}
+                  <MicOff className="mr-2 h-4 w-4" /> {t("common.stop")}
                 </>
               ) : (
                 <>
-                  <Mic className="mr-2 h-4 w-4" /> {t("start")}
+                  <Mic className="mr-2 h-4 w-4" /> {t("keyer.start")}
                 </>
               )}
             </Button>
@@ -308,8 +308,8 @@ export default function KeyInput() {
             </div>
 
             <div className="flex items-center space-x-2 w-full sm:w-auto justify-end">
-              <Label htmlFor="show-visualizer" className="whitespace-nowrap">
-                {t("waveform")}
+              <Label htmlFor="show-visualizer" className="whitespace-nowrap text-sm">
+                {t("keyer.waveform")}
               </Label>
               <Switch id="show-visualizer" checked={showVisualizer} onCheckedChange={setShowVisualizer} />
             </div>
@@ -322,25 +322,25 @@ export default function KeyInput() {
           )}
 
           <div className="space-y-2">
-            <div className="font-medium">{t("detectedMorse")}:</div>
-            <div className="p-4 min-h-16 bg-muted rounded-md font-mono break-all text-sm sm:text-base overflow-x-auto whitespace-normal">
-              {currentMorse || t("waitingForInput")}
+            <div className="font-medium text-sm sm:text-base">{t("keyer.detectedMorse")}:</div>
+            <div className="p-3 sm:p-4 min-h-12 sm:min-h-16 bg-muted rounded-md font-mono break-all text-xs sm:text-sm overflow-x-auto whitespace-normal">
+              {currentMorse || t("keyer.waitingForInput")}
             </div>
           </div>
 
           <div className="space-y-2">
-            <div className="font-medium">{t("decodedText")}:</div>
-            <div className="p-4 min-h-16 bg-muted rounded-md break-all text-sm sm:text-base overflow-x-auto whitespace-normal">
-              {decodedText || t("decodedTextWillAppear")}
+            <div className="font-medium text-sm sm:text-base">{t("keyer.decodedText")}:</div>
+            <div className="p-3 sm:p-4 min-h-12 sm:min-h-16 bg-muted rounded-md break-all text-xs sm:text-sm overflow-x-auto whitespace-normal">
+              {decodedText || t("keyer.decodedTextWillAppear")}
             </div>
           </div>
 
           <div className="flex flex-wrap gap-2">
-            <Button onClick={decodeCurrentMorse} disabled={!currentMorse} className="flex-1 sm:flex-none">
-              {t("decode")}
+            <Button onClick={decodeCurrentMorse} disabled={!currentMorse} className="flex-1 sm:flex-none text-sm">
+              {t("keyer.decode")}
             </Button>
-            <Button onClick={clearInput} variant="outline" className="flex-1 sm:flex-none">
-              {t("clear")}
+            <Button onClick={clearInput} variant="outline" className="flex-1 sm:flex-none text-sm">
+              {t("keyer.clear")}
             </Button>
           </div>
         </CardContent>
@@ -350,21 +350,21 @@ export default function KeyInput() {
               <AccordionTrigger>
                 <div className="flex items-center">
                   <Settings2 className="h-4 w-4 mr-2" />
-                  {t("advancedSettings")}
+                  {t("keyer.advancedSettings")}
                 </div>
               </AccordionTrigger>
               <AccordionContent>
                 <div className="space-y-4 pt-2">
                   <div className="flex items-center space-x-2">
                     <Label htmlFor="auto-decode" className="min-w-[100px]">
-                      {t("autoDecode")}
+                      {t("keyer.autoDecode")}
                     </Label>
                     <Switch id="auto-decode" checked={autoDecodeEnabled} onCheckedChange={setAutoDecodeEnabled} />
                   </div>
 
                   <div className="space-y-2">
                     <div className="flex justify-between items-center">
-                      <Label className="min-w-[100px]">{t("sensitivity")}:</Label>
+                      <Label className="min-w-[100px]">{t("keyer.sensitivity")}:</Label>
                       <span className="text-sm font-mono">{threshold.toFixed(2)}</span>
                     </div>
                     <Slider
@@ -378,7 +378,7 @@ export default function KeyInput() {
 
                   <div className="space-y-2">
                     <div className="flex justify-between items-center">
-                      <Label className="min-w-[100px]">{t("dotLength")}:</Label>
+                      <Label className="min-w-[100px]">{t("keyer.dotLength")}:</Label>
                       <span className="text-sm font-mono">{dotDuration}ms</span>
                     </div>
                     <Slider
@@ -395,7 +395,7 @@ export default function KeyInput() {
 
                   <div className="space-y-2">
                     <div className="flex justify-between items-center">
-                      <Label className="min-w-[100px]">{t("letterGap")}:</Label>
+                      <Label className="min-w-[100px]">{t("keyer.letterGap")}:</Label>
                       <span className="text-sm font-mono">{letterGap}ms</span>
                     </div>
                     <Slider
@@ -409,7 +409,7 @@ export default function KeyInput() {
 
                   <div className="space-y-2">
                     <div className="flex justify-between items-center">
-                      <Label className="min-w-[100px]">{t("wordGap")}:</Label>
+                      <Label className="min-w-[100px]">{t("keyer.wordGap")}:</Label>
                       <span className="text-sm font-mono">{wordGap}ms</span>
                     </div>
                     <Slider

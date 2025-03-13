@@ -44,7 +44,7 @@ export default function QCodePractice() {
     let otherOptions = allOptions.filter((option) => option !== correctAnswer)
     otherOptions = otherOptions.sort(() => 0.5 - Math.random()).slice(0, 3)
 
-    // 正解と他の選択肢を合わせてシャッフル
+    // 正解と他の選択肢を合わせて��ャッフル
     const allChoices = [...otherOptions, correctAnswer].sort(() => 0.5 - Math.random())
 
     setOptions(allChoices)
@@ -94,10 +94,10 @@ export default function QCodePractice() {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <Button onClick={toggleMode} variant="outline">
-          {mode === "codeToMeaning" ? t("codeToMeaning") : t("meaningToCode")}
+          {mode === "codeToMeaning" ? t("codes.codeToMeaning") : t("codes.meaningToCode")}
         </Button>
         <div className="flex items-center gap-2">
-          <span className="text-sm font-medium">{t("accuracyRate")}:</span>
+          <span className="text-sm font-medium">{t("common.accuracyRate")}:</span>
           <Badge variant="outline">{totalQuestions > 0 ? Math.round((score / totalQuestions) * 100) : 0}%</Badge>
         </div>
       </div>
@@ -107,7 +107,7 @@ export default function QCodePractice() {
       <Card>
         <CardHeader>
           <CardTitle className="text-center">
-            {mode === "codeToMeaning" ? t("whatMeaningForCode") : t("whatCodeForMeaning")}
+            {mode === "codeToMeaning" ? t("codes.whatMeaningForCode") : t("codes.whatCodeForMeaning")}
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -128,29 +128,29 @@ export default function QCodePractice() {
           {isCorrect === null && !showAnswer ? (
             <div className="flex gap-2 w-full">
               <Button onClick={checkAnswer} disabled={!selectedAnswer} className="flex-1">
-                {t("submit")}
+                {t("common.submit")}
               </Button>
               <Button onClick={revealAnswer} variant="outline" className="flex-1">
                 <HelpCircle className="h-4 w-4 mr-2" />
-                {t("showAnswer")}
+                {t("common.showAnswer")}
               </Button>
             </div>
           ) : (
             <Button onClick={handleNextQuestion} className="w-full">
-              {t("nextQuestion")}
+              {t("common.nextQuestion")}
             </Button>
           )}
 
           {isCorrect !== null && (
             <div className={`flex items-center justify-center gap-2 ${isCorrect ? "text-green-500" : "text-red-500"}`}>
               {isCorrect ? <CheckCircle className="h-5 w-5" /> : <AlertCircle className="h-5 w-5" />}
-              <span>{isCorrect ? t("correct") : t("incorrect")}</span>
+              <span>{isCorrect ? t("common.correct") : t("common.incorrect")}</span>
             </div>
           )}
 
           {(showAnswer || isCorrect === false) && (
             <div className="text-center p-2 bg-muted/30 rounded-md w-full">
-              <span className="font-medium">{t("answer")}: </span>
+              <span className="font-medium">{t("common.answer")}: </span>
               {mode === "codeToMeaning" ? (
                 <span>{qCodesData[currentQuestion].meaning}</span>
               ) : (
